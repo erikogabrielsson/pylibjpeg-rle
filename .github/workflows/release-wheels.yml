@@ -1,6 +1,8 @@
 name: release-deploy
 
 on:
+  push:
+    branches: [ master ]
   release:
     types: [ published ]
 
@@ -266,20 +268,20 @@ jobs:
   # The pypi upload fails with non-linux containers, so grab the uploaded
   #     artifacts and run using those
   # See: https://github.com/pypa/gh-action-pypi-publish/discussions/15
-  deploy:
-    name: Upload wheels to PyPI
-    needs: [ test-package ]
-    runs-on: ubuntu-latest
+  # deploy:
+  #   name: Upload wheels to PyPI
+  #   needs: [ test-package ]
+  #   runs-on: ubuntu-latest
 
-    steps:
-    - name: Download the wheels
-      uses: actions/download-artifact@v2
-      with:
-        name: wheels
-        path: dist/
+  #   steps:
+  #   - name: Download the wheels
+  #     uses: actions/download-artifact@v2
+  #     with:
+  #       name: wheels
+  #       path: dist/
 
-    - name: Publish package to PyPi
-      uses: pypa/gh-action-pypi-publish@master
-      with:
-        user: __token__
-        password: ${{ secrets.PYPI_PASSWORD }}
+  #   - name: Publish package to PyPi
+  #     uses: pypa/gh-action-pypi-publish@master
+  #     with:
+  #       user: __token__
+  #       password: ${{ secrets.PYPI_PASSWORD }}
